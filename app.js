@@ -1,43 +1,39 @@
 // TODO
-class GroceryListItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      have: false
-    };
+function GroceryListItem({ item }) {
+  const [have, setHave] = React.useState(false);
+
+  function onLIClick() {
+    setHave(!have);
   }
 
-  onLIClick() {
-    this.setState({
-      have: !this.state.have
-    });
-  }
+  const style = {
+    textDecoration: have ? "line-through" : "none",
+  };
 
-  render() {
-
-    var style = {
-      textDecoration: this.state.have ? 'line-through' : 'none'
-    };
-
-    return (
-    <li style={style} onClick={this.onLIClick.bind(this)}>{this.props.items}</li>
-    );
-  }
+  return (
+    <li style={style} onClick={onLIClick}>
+      {item}
+    </li>
+  );
 }
 
-var GroceryList = (props) => (
-  <ul>
-    {props.items.map(items =>
-    <GroceryListItem items={items} />
-  )}
-  </ul>
-);
+function GroceryList({ items }) {
+  return (
+    <ul>
+      {items.map((item) => (
+        <GroceryListItem item={item} />
+      ))}
+    </ul>
+  );
+}
 
-var App = () => (
-  <div>
-    <h2>My Grocery List</h2>
-    <GroceryList items={['Bread', 'Milk']}/>
-  </div>
-)
+function App() {
+  return (
+    <div>
+      <h2>My Grocery List</h2>
+      <GroceryList items={["Bread", "Milk"]} />
+    </div>
+  );
+}
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById("app"));
